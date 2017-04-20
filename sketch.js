@@ -10,21 +10,25 @@ function setup(){
   noCanvas()
   let timeLeft = 300
   let params = getURLParams()
+  let currentTime
+  let startTime = millis()
   if(params.minute) {
   let mins = params.minute;
   timeLeft = mins * 60
   }
-  let counter = 0
   let timer = select('#timer')
+
+  let interval = setInterval(timeIt, 1000)
+
+
   function timeIt() {
-    counter++
-    timer.html(formatTime(timeLeft - counter))
-    if (counter == timeLeft){
+    currentTime = floor((millis() - startTime)/1000)
+    timer.html(formatTime(timeLeft - currentTime))
+    if (currentTime == timeLeft){
       ding.play()
-      counter = 0
+      currentTime = 0
     }
   }
-  setInterval(timeIt, 1000)
 }
 
 var ding
